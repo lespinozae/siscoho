@@ -42,6 +42,7 @@ ul li{
 
 #main-header
 {
+    height: 98px;
     position: fixed;
     top: 0;
     width: 100%;

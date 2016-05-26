@@ -187,12 +187,17 @@ else
           <div class="form-group">
               <div class="row">
               <div class="col-xs-4">
-                  <label style="font-size:14px; margin-left: 10px;" for="import_s" class="control-label" >A&ntilde;o Lectivo y Semestre: </label></div>
+                  <label style="font-size:14px; margin-left: 10px;" for="import_s" class="control-label" >A&ntilde;o Lectivo y Semestre: <?php
+             
+                                      $anio = carga::getStatic_import();
+                                                                            //print_r($anio);
+                                                                            ?></label></div>
                   <div class="col-xs-8">
+                   
+                      
                       <select name="import_s" id="import_s" class="form-control"  style="width: 60%;" onchange="_import(<?php echo $_GET["id"]; ?>, this.value, <?php echo $p_actual; ?>,'tabla_import', 'cajax/import.php');">
                                                 <option class="priElement" value="">Seleccione una opci&oacute;n</option>
               <?php
-                                      $anio = carga::getStatic_import();
               for($z=0; $z<count($anio); $z++)
               {
                   ?>

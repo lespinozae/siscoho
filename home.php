@@ -1,8 +1,10 @@
 <?php
 require_once './core/zona_privada.php';
+
 require_once './core/carga.php';
 require_once './core/user.php';
 require_once './core/horario.php';
+
 require_once 'menu.php';
 $BAND = false;
 setlocale(LC_MONETARY, 'en_US');
@@ -31,6 +33,7 @@ if(isset($_GET) and isset($_GET["eli"]))
     $objH = new horario();
     $respuesta = $objH->deleteHorario($_GET['eli']);
 }  
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -290,6 +293,7 @@ if(isset($_GET) and isset($_GET["eli"]))
                     </div> 
                 </div>
             </div>-->
+
         </div>
         <?php
         include './inc/footer.php';
