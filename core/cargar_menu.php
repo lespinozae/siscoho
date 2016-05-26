@@ -3,11 +3,12 @@
 class menu {
     
     public function get($id_padre = 0) {
+        
         $menu = '';
         $sql = "select menu.id as id, menu.menu as menu, menu.archivo as archivo, id_padre from usuario inner join tusuario inner join tusuario_has_menu inner join menu
 on tusuario.id = usuario.tusuario_id and tusuario.id = tusuario_has_menu.tusuario_id and menu.id = tusuario_has_menu.menu_id
 where usuario.docentes_id = ? and menu.id_padre = ? and m =1";
-        
+        //echo $sql;
         $user = $_SESSION["user"];
         $data = array("si", "{$user}","{$id_padre}");
         $fields = array("id" => "", "menu" => "", "archivo" => "", "id_padre" => "");
@@ -37,7 +38,7 @@ where usuario.docentes_id = ? and menu.id_padre = ? and m =1";
                         $menu .= '<a href="'.$resultados[$i]["archivo"].'">'
                         . $resultados[$i]["menu"];
                     }
-                    $menu .= ' <ul class="dropdown-menu">';
+                    $menu .= '<ul class="dropdown-menu">';
                 }
                 else
                 {
@@ -45,7 +46,7 @@ where usuario.docentes_id = ? and menu.id_padre = ? and m =1";
                         '<li><a href="'.$resultados[$i]["archivo"].'">' 
                         . $resultados[$i]["menu"] . '</a><li>';
                 }
-                
+                //echo $resultados[$i]["id"];
                 $menu .= $this->get($resultados[$i]["id"]);
                 
                 if($resultados[$i]["id_padre"]==0)
@@ -55,6 +56,7 @@ where usuario.docentes_id = ? and menu.id_padre = ? and m =1";
             }
         }
         return $menu;
+       //exit();
     }
     
     public function getCantidadSubMenu($id_padre = 0) {

@@ -334,10 +334,14 @@ WHERE carga_asignatura.carga_docentes_id = ? and carga_asignatura.carga_periodo_
     
     public static function getStatic_import()
     {
-        $anio = date("Y")-3;
-        $aniof = date("Y")-1;
+        $anio_ = self::getStatic_activo();
+        
+        $anio = $anio_[0]["anio_lectivo"]-3;
+        $aniof = $anio_[0]["anio_lectivo"]-1;
+        //echo $anio;
+        //echo $aniof;
         $sql = "SELECT periodo.id, periodo.anio_lectivo, semestre.nombre FROM `periodo` inner JOIN semestre ON periodo.semestre_id = semestre.id WHERE periodo.anio_lectivo BETWEEN ? and ? order by periodo.anio_lectivo";
-        echo $sql;
+        //echo $sql;
         $data = array("ii", "{$anio}", "{$aniof}");
         $fields = array("id" => "", "anio_lectivo" => "", "nombre" => "");
         DBConnector::ejecutar($sql, $data, $fields);

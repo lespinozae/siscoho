@@ -302,11 +302,11 @@ class p {
             if ($result or $result_c > 0)
         {
             
-            header("Location: p.php?o=1");
+            echo '<script>window.location.href="p.php?o=1";</script>';
         }else
         {
             
-            header("Location: p.php?o=2");
+            echo '<script>window.location.href="p.php?o=2";</script>';
         }
     }
     
@@ -317,14 +317,13 @@ class p {
             $result = DBConnector::ejecutar($sql, $data);
             $result_c = DBConnector::$filaAfectada;
             
-               if ($result or $result_c > 0)
+        if ($result or $result_c > 0)
         {
-            
-            header("Location: p.php?c=1");
+            echo '<script>window.location.href="p.php?c=1";</script>';
         }else
         {
             
-            header("Location: p.php?c=2");
+            echo '<script>window.location.href="p.php?c=2";</script>';
         }
     }
     

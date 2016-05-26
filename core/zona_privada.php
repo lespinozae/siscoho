@@ -5,6 +5,7 @@ require_once('mStatic.php');
 /* Inicia nueva sesion */ 
 session_start();
 
+
 if($_SESSION["user"]==""){ 
    
 	header("location:index.php");
