@@ -15,11 +15,11 @@ class user {
     
     public function getUser($idUSer)
     {
-        $sql = "select id, cedula, inss, pnombre, snombre, papellido, sapellido, sexo, telefono, direccion, tipo_contratacion_id, "
+        $sql = "select id, cedula, inss, pnombre, snombre, papellido, sapellido, sexo, telefono, direccion, direccion2, tipo_contratacion_id, "
                 . "categoria_docente_id, departamento_id, ccontrato_id, ecivil_id, oficio_id, nacionalidad_id, nivel_academico_id from docentes where id = ?";  
         $data = array("s", "{$idUSer}");
         $fields = array("id" => "", "cedula" => "", "inss"=>"", "pnombre"=>"", "snombre"=>"", 
-            "papellido"=>"", "sapellido"=>"", "sexo"=>"", "telefono"=>"", "direccion"=>"", "tipo_contratacion_id"=>"",
+            "papellido"=>"", "sapellido"=>"", "sexo"=>"", "telefono"=>"", "direccion"=>"", "direccion2"=>"", "tipo_contratacion_id"=>"",
             "categoria_docente_id"=>"", "departamento_id"=>"", "ccontrato_id"=>"", "ecivil_id"=>"", "oficio_id"=>"", "nacionalidad_id"=>"", "nivel_academico_id"=>"");
         DBConnector::ejecutar($sql, $data, $fields);
 
@@ -400,8 +400,9 @@ class user {
     //Metodo de insercion de usuario
     public function setUser($array = array())
     {
+        //ini_set('display_errors', 1);
+//error_reporting(E_ALL);
         //print_r($array);
-        //exit();
         foreach($array as $campo=>$valor)
         {
             $$campo = $valor;
@@ -409,12 +410,11 @@ class user {
         $cedula = strtoupper(str_replace(' ', '', $cedula));
         
 //Docente
-        $sql = "INSERT INTO docentes (cedula, inss, pnombre, snombre, papellido, sapellido, sexo, telefono, tipo_contratacion_id, direccion, categoria_docente_id, departamento_id, ccontrato_id, ecivil_id, oficio_id, nacionalidad_id, nivel_academico_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO docentes (cedula, inss, pnombre, snombre, papellido, sapellido, sexo, telefono, tipo_contratacion_id, direccion, direccion2, categoria_docente_id, departamento_id, ccontrato_id, ecivil_id, oficio_id, nacionalidad_id, nivel_academico_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         //echo $sql;
         
-        $data = array("sssssssisssssiiii", "{$cedula}", "{$inss}", "{$pnombre}", "{$snombre}", "{$papellido}", "{$sapellido}", "{$sexo}", "{$telefono}", "{$tc}", "{$direccion}", "{$cd}", "{$d}", "{$cc}", "{$ec}", "{$o}", "{$n}", "{$na}");
+        $data = array("sssssssissssssiiii", "{$cedula}", "{$inss}", "{$pnombre}", "{$snombre}", "{$papellido}", "{$sapellido}", "{$sexo}", "{$telefono}", "{$tc}", "{$direccion}", "{$direccion2}","{$cd}", "{$d}", "{$cc}", "{$ec}", "{$o}", "{$n}", "{$na}");
         $result1 = DBConnector::ejecutar($sql, $data);
-        //echo $sql;
         
         $cedula = self::getStatic_id($cedula)[0]["id"];
         //echo $cedula;
@@ -459,19 +459,19 @@ class user {
         if(isset($cedula))
         {
         $cedula = strtoupper(str_replace(' ', '', $cedula));
-        $sql = "UPDATE `docentes` SET `cedula` = ?, `inss` = ?, `pnombre` = ?, `snombre` = ?, `papellido` = ?, `sapellido` = ?, `sexo` = ?, `telefono` = ?, `direccion` = ?, `tipo_contratacion_id` = ?, `categoria_docente_id` = ?, `departamento_id` = ?, `ccontrato_id` = ?, `ecivil_id` = ?, `oficio_id` = ?, `nacionalidad_id` = ?, `nivel_academico_id` = ? WHERE `id` = ?";
+        $sql = "UPDATE `docentes` SET `cedula` = ?, `inss` = ?, `pnombre` = ?, `snombre` = ?, `papellido` = ?, `sapellido` = ?, `sexo` = ?, `telefono` = ?, `direccion` = ?, `direccion2` = ?, `tipo_contratacion_id` = ?, `categoria_docente_id` = ?, `departamento_id` = ?, `ccontrato_id` = ?, `ecivil_id` = ?, `oficio_id` = ?, `nacionalidad_id` = ?, `nivel_academico_id` = ? WHERE `id` = ?";
         //echo $sql;
         
-        $data = array("sssssssisssssiiiis", "{$cedula}", "{$inss}", "{$pnombre}", "{$snombre}", "{$papellido}", "{$sapellido}", "{$sexo}", "{$telefono}", "{$direccion}", "{$tc}", "{$cd}", "{$d}", "{$cc}", "{$ec}", "{$o}", "{$n}", "{$na}", "{$cedulam}");
+        $data = array("sssssssissssssiiiis", "{$cedula}", "{$inss}", "{$pnombre}", "{$snombre}", "{$papellido}", "{$sapellido}", "{$sexo}", "{$telefono}", "{$direccion}", "{$direccion2}", "{$tc}", "{$cd}", "{$d}", "{$cc}", "{$ec}", "{$o}", "{$n}", "{$na}", "{$cedulam}");
         $result1 = DBConnector::ejecutar($sql, $data);
         $result1_c = DBConnector::$filaAfectada;
         }
         else
         {
-            $sql = "UPDATE `docentes` SET `inss` = ?, `pnombre` = ?, `snombre` = ?, `papellido` = ?, `sapellido` = ?, `sexo` = ?, `telefono` = ?, `direccion` = ?, `tipo_contratacion_id` = ?, `categoria_docente_id` = ?, `departamento_id` = ?, `ccontrato_id` = ?, `ecivil_id` = ?, `oficio_id` = ?, `nacionalidad_id` = ?, `nivel_academico_id` = ? WHERE `id` = ?";
+            $sql = "UPDATE `docentes` SET `inss` = ?, `pnombre` = ?, `snombre` = ?, `papellido` = ?, `sapellido` = ?, `sexo` = ?, `telefono` = ?, `direccion` = ?, `direccion2` = ?, `tipo_contratacion_id` = ?, `categoria_docente_id` = ?, `departamento_id` = ?, `ccontrato_id` = ?, `ecivil_id` = ?, `oficio_id` = ?, `nacionalidad_id` = ?, `nivel_academico_id` = ? WHERE `id` = ?";
         //echo $sql;
         
-        $data = array("ssssssisssssiiiis", "{$inss}", "{$pnombre}", "{$snombre}", "{$papellido}", "{$sapellido}", "{$sexo}", "{$telefono}", "{$direccion}", "{$tc}", "{$cd}", "{$d}", "{$cc}", "{$ec}", "{$o}", "{$n}", "{$na}", "{$cedulam}");
+        $data = array("ssssssissssssiiiis", "{$inss}", "{$pnombre}", "{$snombre}", "{$papellido}", "{$sapellido}", "{$sexo}", "{$telefono}", "{$direccion}", "{$direccion2}", "{$tc}", "{$cd}", "{$d}", "{$cc}", "{$ec}", "{$o}", "{$n}", "{$na}", "{$cedulam}");
         $result1 = DBConnector::ejecutar($sql, $data);
         $result1_c = DBConnector::$filaAfectada;
         }

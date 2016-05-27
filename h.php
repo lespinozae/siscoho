@@ -42,7 +42,7 @@ require_once 'menu.php';
         <?php include './inc/header.php'; ?>
         <div class="container" id="principal">
             <div class="row">
-               <div class="alert alert-success" style="width: 50%; background-color: #F8F8F8; border-color: #000000; color: #000000;" role="alert"><h3>Configurar:</h3>
+               <div class="alert alert-success paleta" role="alert"><h3>Configurar:</h3>
                 </div>
                 <div class="col-xs-5">
                     

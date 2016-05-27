@@ -94,6 +94,10 @@ function data() {
     if (array_key_exists('direccion', $_POST)) {
         $data["direccion"] = $_POST['direccion'];
     }
+    
+    if (array_key_exists('direccion2', $_POST)) {
+        $data["direccion2"] = $_POST['direccion2'];
+    }
     if (array_key_exists('sexo', $_POST)) {
         $data["sexo"] = $_POST['sexo'];
     }
@@ -208,7 +212,6 @@ if (isset($_GET)) {
 
 if (isset($_POST)) {
     if (isset($_POST["SET"])) {
-        //print_r($_POST);
         $objUser_->setUser($data);
     }
 }
@@ -294,7 +297,7 @@ require_once 'menu.php';
             <div class="row">
                 <div class="col-xs-12">
                     
-                    <div class="alert alert-success" style="width: 50%; background-color: #F8F8F8; border-color: #000000; color: #000000;" role="alert"><h3>Docentes:</h3>
+                    <div class="alert alert-success paleta" role="alert"><h3>Docentes:</h3>
                         
                 </div>
                     <?php require './respuesta.php'; ?>
@@ -715,6 +718,18 @@ require_once 'menu.php';
                                                     echo $result[0]["telefono"];
                                                 }
                                                 ?>">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="direccion2" class="control-label col-xs-5">Direcci&oacute;n</label>
+                                            <div class="col-xs-7">
+                                                <textarea name="direccion2" id="direccion2" cols="26" rows="10"><?php
+                                                if ($BANDM) {
+                                                    echo $result[0]["direccion2"];
+                                                }
+                                                ?></textarea>
+                                                
                                             </div>
                                         </div>
 

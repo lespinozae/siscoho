@@ -32,10 +32,10 @@ if(isset($_POST) and isset($_POST['agregar_import']))
         $array_para_enviar_via_url = serialize($array_f);
         $array_para_enviar_via_url = urlencode($array_para_enviar_via_url);
         print_r($array_para_enviar_via_url);
-        echo '<script>window.location = "c.php?id='.$idDocente.'&array='.$array_para_enviar_via_url.'";</script>';
+        echo '<script>window.location = "cc.php?id='.$idDocente.'&array='.$array_para_enviar_via_url.'";</script>';
     }else
     {
-        echo '<script>window.location = "c.php?id='.$idDocente.'&import=yes";</script>';
+        echo '<script>window.location = "cc.php?id='.$idDocente.'&import=yes";</script>';
     }
     
     //header("Location: );
@@ -189,7 +189,7 @@ else
               <div class="col-xs-4">
                   <label style="font-size:14px; margin-left: 10px;" for="import_s" class="control-label" >A&ntilde;o Lectivo y Semestre: </label></div>
                   <div class="col-xs-8">
-                      <select name="import_s" id="import_s" class="form-control"  style="width: 60%;" onchange="_import(<?php echo $_GET["id"]; ?>, this.value, <?php echo $p_actual; ?>,'tabla_import', 'cajax/import.php');">
+                      <select name="import_s" id="import_s" class="form-control"  style="width: 60%;" onchange="_import(<?php echo $_GET["id"]; ?>, this.value, <?php echo $p_actual; ?>,'tabla_import', 'cajax/import_c.php');">
                                                 <option class="priElement" value="">Seleccione una opci&oacute;n</option>
               <?php
                                       $anio = carga::getStatic_import();
@@ -241,14 +241,14 @@ else
                                 }
                                 
                                 ?>
-                                <meta http-equiv="Refresh" content="10;url=c.php?id=<?php echo $_GET["id"];?>">
+                                <meta http-equiv="Refresh" content="10;url=cc.php?id=<?php echo $_GET["id"];?>">
                                 <?php
                             }
                             else if(isset($_GET['import']))
                             {
                                 echo "La importacion se realizo con exito";
                                 ?>
-                                <meta http-equiv="Refresh" content="5;url=c.php?id=<?php echo $_GET["id"];?>">
+                                <meta http-equiv="Refresh" content="5;url=cc.php?id=<?php echo $_GET["id"];?>">
                                 <?php
                             }
                              ?></p>
