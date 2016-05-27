@@ -126,7 +126,8 @@ body {
                             <center> <span style="text-align: center; color: #B40404;">El usuario no existe en la base de datos</span></center>
 
                         <?php } ?>
-                        <a href="#" style="padding-top: 10px;">Reiniciar contrase&ntilde;a</a>
+                            <br/><hr />
+                            <a href="rp.html" style="padding-top: 10px;">Reiniciar contrase&ntilde;a</a>
                     </form>
                 </div>
             </div>
