@@ -45,9 +45,9 @@ require_once 'menu.php';
                             ?> <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="#">Cambio de contrase&ntilde;a</a></li>
-          <li><a href="#">Acción #2</a></li>
-          <li><a href="#">Acción #3</a></li>
+          <li><a href="cpass.php">Cambio de contrase&ntilde;a</a></li>
+          <li><a href="#">Beneficiario</a></li>
+          <li><a href="#">Datos generales</a></li>
           <li class="divider"></li>
           <li><a href="sesion.php" title="Cerrar Sesión" onClick="willReset=confirm('&iquest;Est&aacute; seguro que desea salir del Sistema?');return willReset;"><span> <i class="fa fa-sign-out"> Salir</i>
 </a></li>
