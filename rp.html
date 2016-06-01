@@ -44,16 +44,19 @@
 
     <script src="js/jquery-2.2.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    
     <script>
       $(document).ready(function(){
         $("#frmRestablecer").submit(function(event){
           event.preventDefault();
+          
           $.ajax({
             url:'validaremail.php',
             type:'post',
             dataType:'json',
             data:$("#frmRestablecer").serializeArray()
           }).done(function(respuesta){
+              console.log(respuesta);
             $("#mensaje").html(respuesta.mensaje);
             $("#email").val('');
           });

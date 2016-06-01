@@ -8,8 +8,7 @@ session_start();
 
 if($_SESSION["user"]==""){ 
    
-	header("location:index.php");
-	exit(); 
+	echo '<script>window.location.href="index.php";</script>';
 	} 
 /* Tiempo de caducidad de la sesión actual */
         $inactivo = 1800;

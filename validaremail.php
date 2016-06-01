@@ -1,7 +1,8 @@
 <?php
 require_once './core/DBConnector.php';
 ini_set('display_errors', 1);
-        error_reporting(E_ALL);
+error_reporting(E_ALL);
+
 	function generarLinkTemporal($idusuario, $username){
 
 		$cadena = $idusuario.$username.rand(1,9999999).date('Y-m-d');
@@ -10,14 +11,14 @@ ini_set('display_errors', 1);
 		$sql = "INSERT INTO tblreseteopass (idusuario, username, token, creado) VALUES(?,?,?,NOW());";
                 
                 $data = array("iss", "{$idusuario}", "{$username}", "{$token}");
-                $resultado = DBConnector::ejecutar($sql, $data);
+                DBConnector::ejecutar($sql, $data);
                 
-		if($resultado){
+		if(DBConnector::$filaAfectada){
 			$enlace = $_SERVER["SERVER_NAME"].'/siscoho/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
 			return $enlace;
 		}
 		else
-			return FALSE;
+                    return FALSE;
 	}
 
 	function enviarEmail( $email, $link ){
@@ -43,25 +44,28 @@ ini_set('display_errors', 1);
 		mail($email, "Recuperar contraseña", $mensaje, $cabeceras);
 	}
 	
-	///$email = $_POST['email'];
-	$email = $_GET['email'];
+	$email = $_POST['email'];
+	//$email = $_POST['email'];
         $respuesta = new stdClass();
 
-if ($email != "") {
-    $sql = "SELECT docentes.pnombre, docentes.snombre, docentes.papellido, docentes.sapellido, docentes.id, docentes.cedula, usuario.pass, docentes.direccion from usuario INNER join docentes ON usuario.docentes_id = docentes.id where docentes.direccion = ?";
-
+if ($email != "") { 
+    $sql = "SELECT id, cedula from `docentes` where direccion = ?";
     $data = array("s", "{$email}");
-    $fields = array("pnombre" => "", "snombre" => "", "papellido" => "", "sapellido" => "", "id" => "", "cedula" => "", "pass" => "", "direccion" => "");
+    $fields = array("id" => "", "cedula" => "");
 
-    $resultado = DBConnector::ejecutar($sql, $data, $fields);
-    echo $email;
+    DBConnector::ejecutar($sql, $data, $fields);
+    //echo $email;
     //print_r($resultado);
-    var_dump($resultado);
-    if (count($resultado) > 0) {
-        $linkTemporal = generarLinkTemporal($resultado[0]['id'], $resultado[0]['cedula']);
+    
+    if (count(DBConnector::$results) > 0) {
+        $linkTemporal = generarLinkTemporal(DBConnector::$results[0]['id'], DBConnector::$results[0]['cedula']);
         if ($linkTemporal) {
             enviarEmail($email, $linkTemporal);
-            $respuesta->mensaje = '<div class="alert alert-info"> Un correo ha sido enviado a su cuenta de email con las instrucciones para restablecer la contraseña <br /> <a class="btn btn-info">Atras</a></div>';
+            $respuesta->mensaje = '<div class="alert alert-info"> Un correo ha sido enviado a su cuenta de email con las instrucciones para restablecer la contraseña <br /> <a class="btn btn-info" href="index.php">Atras</a></div>';
+        }
+        else
+        {
+            $respuesta->mensaje = "Error!";
         }
     } else
         $respuesta->mensaje = '<div class="alert alert-warning"> No existe una cuenta asociada a ese correo. </div>';

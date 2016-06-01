@@ -3,26 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Applications/MAMP/htdocs/siscoho/js/ajax.js</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/userc.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/cajax/setImport.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/cajax/get_p.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/core/p.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/c.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/css/estilos.css</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/css/styles.css</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/p.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/users.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/core/cargar_menu.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/cajax/import.php</file>
+            <file>file:/Applications/MAMP/htdocs/siscoho/cc.php</file>
+            <file>file:/Applications/MAMP/htdocs/siscoho/index.php</file>
+            <file>file:/Applications/MAMP/htdocs/siscoho/core/user.php</file>
+            <file>file:/Applications/MAMP/htdocs/siscoho/validaremail.php</file>
+            <file>file:/Applications/MAMP/htdocs/siscoho/core/mStatic.php</file>
+            <file>file:/Applications/MAMP/htdocs/siscoho/rp.html</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/core/DBConnector.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/inc/header.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/core/carga.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/home.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/menu.html</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/core/zona_privada.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/export.php</file>
-            <file>file:/Applications/MAMP/htdocs/siscoho/menu.php</file>
         </group>
     </open-files>
 </project-private>

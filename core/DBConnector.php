@@ -62,7 +62,7 @@ class DBConnector {
         self::$results = array();
         self::$sql = $sql;
         self::$data = $data;
-        //print_r(self::$data);
+        
         self::conectar();
         self::preparar();
         self::set_params();
