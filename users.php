@@ -715,7 +715,7 @@ require_once 'menu.php';
                                         <div class="form-group">
                                             <label for="direccion2" class="control-label col-xs-5">Direcci&oacute;n</label>
                                             <div class="col-xs-7">
-                                                <textarea name="direccion2" id="direccion2" cols="26" rows="10"><?php
+                                                <textarea class="form-control" name="direccion2" id="direccion2" cols="26" rows="10"><?php
                                                 if ($BANDM) {
                                                     echo $result[0]["direccion2"];
                                                 }

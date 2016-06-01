@@ -589,4 +589,28 @@ class user {
         }
     }
     
+    public function setUpdateB($array = array())
+    {
+        
+            foreach($array as $campo=>$valor)
+            {
+                $$campo = $valor;
+            }
+            
+            $sql = "UPDATE `beneficiario` SET `cedula` = ?, `nombre` = ?, `apellidos` = ?, `direccion` = ? WHERE `docentes_id` = ?;";
+            $data = array("ssssi", "{$cedula}", "{$nombre}", "{$apellido}", "{$dir}", "{$cedulam}");
+            $result = DBConnector::ejecutar($sql, $data);
+            $result_c = DBConnector::$filaAfectada;
+            
+
+        
+        if ($result or $result_c > 0)
+        {
+            echo '<script>window.location.href="b.php?ecp=1";</script>';
+        }else
+        {
+            echo '<script>window.location.href="b.php?ecp=2";</script>';
+        }
+    }
+    
 }
