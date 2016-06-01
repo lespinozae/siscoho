@@ -47,6 +47,26 @@
 
 <?php
                     if (isset($_GET)) {
+                        if (isset($_GET["ecp"]) and $_GET["ecp"] == 1) {
+                            ?>
+                            <div class="alert alert-success alert-dismissible" role="alert" style="width: 100%; margin: 0 auto; text-align: center;">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Bien hecho!</strong> Tu registro se modifico correctamente.
+                            </div>
+                            <?php
+                        } elseif (isset($_GET["ecp"]) and $_GET["ecp"] == 2) {
+                            ?>
+                            <div class="alert alert-danger alert-dismissible" role="alert" style="width: 100%; margin: 0 auto; text-align: center;">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Error!</strong> Tu registro no se modifico o posiblemente no realizo cambios. Contactese con su administrador si el error persiste
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+
+<?php
+                    if (isset($_GET)) {
                         if (isset($_GET["d"]) and $_GET["d"] == 1) {
                             ?>
                             <div class="alert alert-success alert-dismissible" role="alert" style="width: 60%; margin: 0 auto; text-align: center;">

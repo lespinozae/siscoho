@@ -3,13 +3,10 @@ require_once './core/zona_privada.php';
 require_once './core/user.php';
 require_once 'menu.php';
 
-if(isset($_POST) and isset($_POST["id"]))
+if(isset($_POST) and isset($_POST["pass"]))
 {
-    $objH = new horario();
-    //print_r($_POST);
-    //exit();
-    $respuesta = $objH->setHorario($_POST['dia'], $_POST['hstart'], $_POST['hend'], $_POST['id']);
-    header("Location: home.php");
+    $obj = new user();
+    $respuesta = $obj->setUpdatePass($_POST["pass"], $_SESSION["user"]);
 }
 
 ?>
@@ -29,14 +26,50 @@ if(isset($_POST) and isset($_POST["id"]))
         <div class="container" id="principal">
             
             <div class="row">
-                <div class="alert alert-success paleta" role="alert"><h3>Carga: <?php if ($BAND) { echo 'Semestre: '. $dato_periodo[0]['nombre'] . ' - A&ntilde;o lectivo: '. $dato_periodo[0]['anio_lectivo']; } ?></h3>
+                <div class="alert alert-success paleta" role="alert"><h3>Cambiar contrase&ntilde;a: </h3>
                 </div>
-                <div class="col-xs-12">
+                <hr />
+                <div class="col-xs-6 col-xs-offset-3">
+                    <?php require './respuesta.php'; ?>
                     
-                    
+                    <br />
                     <fieldset>
+                        
+                           
  <div class="mensaje"></div>
                                         
+ <form name="form" class="form-horizontal" style="text-align: left;" action="cpass.php" method="POST">
+     
+     <div class="panel panel-default">
+            <div class="panel-heading"> Cambiar contraseña </div>
+            <div class="panel-body">
+              <p></p>
+              <div class="control-label col-xs-12">
+         <div class="form-group">
+         <label for="pass" class="control-label col-xs-5">Contrase&ntilde;a</label>
+                                            <div class="col-xs-7">
+                                                <input type="password" name="pass" required="require" class="form-control"  id="pass">
+                                            </div>
+                                        </div>
+     </div>
+              
+              <div class="control-label col-xs-12">
+         <div class="form-group">
+         <label for="rpass" class="control-label col-xs-5">Repetir contrase&ntilde;a</label>
+                                            <div class="col-xs-7">
+                                                <input type="password" name="rpass" required="require" class="form-control"  id="rpass">
+                                            </div>
+                                        </div>
+     </div>
+              <div class="form-group text-right">
+                  <button type="submit" onclick="return validar();" class="btn btn-primary" id="enviar" >Cambiar contraseña</button>
+              </div>
+            </div>
+          </div>
+     
+     
+     
+ </form>
                              </fieldset>
 
   <!-- Modal -->
@@ -44,6 +77,11 @@ if(isset($_POST) and isset($_POST["id"]))
   
 </div>
 
+
+
+                </div>
+            </div>
+        </div>
         <?php
         include './inc/footer.php';
         ?>
@@ -51,5 +89,24 @@ if(isset($_POST) and isset($_POST["id"]))
         <?php
         include './inc/footer_common.php';
         ?>
+        <script>
+               function validar ()
+               {
+                   var pass1 = document.getElementById("pass").value;
+                   var pass2 =  document.getElementById("rpass").value;
+                   
+                   if(pass1 == pass2)
+                   {
+                       return true;
+                   }
+                   else
+                   {
+                        $.prompt("Error! Las contraseñas son diferentes!!!", {
+                                            title: "Error",
+                                            buttons: { "Ok": true} });
+                       return false;
+                   }
+               }
+        </script>
     </body>
 </html>

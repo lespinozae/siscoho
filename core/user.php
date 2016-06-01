@@ -570,5 +570,23 @@ class user {
         return DBConnector::$results;
     }
     
+    public function setUpdatePass($pass, $id)
+    {
+            $sql = "UPDATE `usuario` SET `pass` = ? WHERE `docentes_id` = ?;";
+            $pass = md5($pass);
+            $data = array("si", "{$pass}", "{$id}");
+            $result = DBConnector::ejecutar($sql, $data);
+            $result_c = DBConnector::$filaAfectada;
+            
+
+        
+        if ($result or $result_c > 0)
+        {
+            echo '<script>window.location.href="cpass.php?ecp=1";</script>';
+        }else
+        {
+            echo '<script>window.location.href="cpass.php?ecp=2";</script>';
+        }
+    }
     
 }
