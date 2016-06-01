@@ -62,7 +62,7 @@ if(isset($_POST) and isset($_POST["pass"]))
                                         </div>
      </div>
               <div class="form-group text-right">
-                  <button type="submit" onclick="return validar();" class="btn btn-primary" id="enviar" >Cambiar contraseña</button>
+                  <button type="submit" style="margin: 10px;"  onclick="return validar();" class="btn btn-primary" id="enviar" >Cambiar contraseña</button>
               </div>
             </div>
           </div>

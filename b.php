@@ -26,7 +26,7 @@ if(isset($_POST) and isset($_POST["pass"]))
         <div class="container" id="principal">
             
             <div class="row">
-                <div class="alert alert-success paleta" role="alert"><h3>Cambiar contrase&ntilde;a: </h3>
+                <div class="alert alert-success paleta" role="alert"><h3>Beneficiario: </h3>
                 </div>
                 <hr />
                 <div class="col-xs-6 col-xs-offset-3">
@@ -41,28 +41,46 @@ if(isset($_POST) and isset($_POST["pass"]))
  <form name="form" class="form-horizontal" style="text-align: left;" action="cpass.php" method="POST">
      
      <div class="panel panel-default">
-            <div class="panel-heading"> Cambiar contraseña </div>
+            <div class="panel-heading"> Actualizar beneficiario </div>
             <div class="panel-body">
               <p></p>
               <div class="control-label col-xs-12">
          <div class="form-group">
-         <label for="pass" class="control-label col-xs-5">Contrase&ntilde;a</label>
-                                            <div class="col-xs-7">
-                                                <input type="password" name="pass" required="require" class="form-control"  id="pass">
+             <label for="cedula" class="control-label col-xs-3">C&eacute;dula</label>
+                                            <div class="col-xs-9">
+                                                <input type="text" name="cedula" required="require" class="form-control"  id="cedula">
                                             </div>
                                         </div>
      </div>
               
               <div class="control-label col-xs-12">
          <div class="form-group">
-         <label for="rpass" class="control-label col-xs-5">Repetir contrase&ntilde;a</label>
-                                            <div class="col-xs-7">
-                                                <input type="password" name="rpass" required="require" class="form-control"  id="rpass">
+         <label for="nombre" class="control-label col-xs-3">Nombre</label>
+                                            <div class="col-xs-9">
+                                                <input type="text" name="nombre" required="require" class="form-control"  id="nombre">
+                                            </div>
+                                        </div>
+     </div>
+              
+              <div class="control-label col-xs-12">
+         <div class="form-group">
+         <label for="apellido" class="control-label col-xs-3">Apellido</label>
+                                            <div class="col-xs-9">
+                                                <input type="text" name="apellido" required="require" class="form-control"  id="apellido">
+                                            </div>
+                                        </div>
+     </div>
+            
+            <div class="control-label col-xs-12">
+         <div class="form-group">
+             <label for="nombre" class="control-label col-xs-3">Direcci&oacute;n</label>
+                                            <div class="col-xs-9">
+                                                <textarea name="dir" cols="50"></textarea>
                                             </div>
                                         </div>
      </div>
               <div class="form-group text-right">
-                  <button type="submit" onclick="return validar();" class="btn btn-primary" id="enviar" >Cambiar contraseña</button>
+                  <button style="margin: 10px;" type="submit" class="btn btn-primary" id="enviar" >Actualizar beneficiario</button>
               </div>
             </div>
           </div>
@@ -89,24 +107,6 @@ if(isset($_POST) and isset($_POST["pass"]))
         <?php
         include './inc/footer_common.php';
         ?>
-        <script>
-               function validar ()
-               {
-                   var pass1 = document.getElementById("pass").value;
-                   var pass2 =  document.getElementById("rpass").value;
-                   
-                   if(pass1 == pass2)
-                   {
-                       return true;
-                   }
-                   else
-                   {
-                        $.prompt("Error! Las contraseñas son diferentes!!!", {
-                                            title: "Error",
-                                            buttons: { "Ok": true} });
-                       return false;
-                   }
-               }
-        </script>
+        
     </body>
 </html>
