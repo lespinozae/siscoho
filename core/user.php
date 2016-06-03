@@ -613,4 +613,31 @@ class user {
         }
     }
     
+    public function setUpdateDG($array = array())
+    {
+        
+            foreach($array as $campo=>$valor)
+            {
+                $$campo = $valor;
+            }
+            
+            print_r($array);
+            
+            $sql = "UPDATE `docentes` SET `inss` = ?, `pnombre` = ?, `snombre` = ?, `papellido` = ?, `sapellido` = ?, `sexo` = ?, `telefono` = ?, `direccion` = ?, `direccion2` = ? WHERE `id` = ?";
+        //echo $sql;
+        
+            $data = array("ssssssissi", "{$inss}", "{$pnombre}", "{$snombre}", "{$papellido}", "{$sapellido}", "{$sexo}", "{$telefono}", "{$direccion}", "{$direccion2}", "{$cedulam}");
+            $result = DBConnector::ejecutar($sql, $data);
+            $result_c = DBConnector::$filaAfectada;
+            //exit();
+
+        if ($result or $result_c > 0)
+        {
+            echo '<script>window.location.href="dg.php?ecp=1";</script>';
+        }else
+        {
+            echo '<script>window.location.href="dg.php?ecp=2";</script>';
+        }
+    }
+    
 }
