@@ -33,6 +33,17 @@ class carga {
         return DBConnector::$results;
     }
     
+    public static function getStatic_facultad($id)
+    {
+       
+        $sql = "SELECT facultad.idfacultad, facultad.facultad FROM `facultad` inner join docentes INNER JOIN departamento on departamento.id = docentes.departamento_id and facultad.idfacultad = departamento._idfacultad WHERE docentes.id = ?";
+        //echo $sql;
+        $data = array("i", "{$id}");
+        $fields = array("id" => "", "facultad" => "");
+        DBConnector::ejecutar($sql, $data, $fields);
+        return DBConnector::$results;
+    }
+    
     public function setCarga($id, $p)
     {
         
@@ -56,6 +67,15 @@ class carga {
         return DBConnector::$results;
     }
     
+    public static function getStatic_DepartamentoC($id)
+    {
+        $sql = "select id, `departamento` from `departamento` where _idfacultad = ?";
+        $data = array("i", "{$id}");
+        $fields = array("id" => "", "departamento"=>"");
+        DBConnector::ejecutar($sql, $data, $fields);
+        return DBConnector::$results;
+    }
+    
     public static function getStatic_carrera($id)
     {
         $sql = "select id, carreras from carreras where _id = ?";
@@ -74,6 +94,7 @@ class carga {
         
         return DBConnector::$results;
     }
+    
     
     public static function getStatic_asignaturas($id, $anio)
     {

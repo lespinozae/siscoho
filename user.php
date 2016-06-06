@@ -548,7 +548,7 @@ require_once 'menu.php';
                                                         </td>
                                                         
                                                             <td>
-                                                            <a data-toggle="tooltip" title="Carga" href="c.php?id=<?php echo $datosU[$i]["id"]; ?>"><i class="fa fa-book fa-2x"></i>
+                                                            <a data-toggle="tooltip" title="Carga" href="d.php?id=<?php echo $datosU[$i]["id"]; ?>"><i class="fa fa-book fa-2x"></i>
                                                             </a></td>
                                                             
                                                             
