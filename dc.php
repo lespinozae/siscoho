@@ -77,20 +77,6 @@ if (isset($_GET)) {
 }
 
 if (isset($_GET)) {
-    if (isset($_GET["id"]) and isset($_GET["open"])) {
-
-        $result = $objD_->open($_GET["id"]);
-    }
-}
-
-if (isset($_GET)) {
-    if (isset($_GET["id"]) and isset($_GET["close"])) {
-
-        $result = $objD_->close($_GET["id"]);
-    }
-}
-
-if (isset($_GET)) {
     if (isset($_GET["id"])) {
 
         $result = $objD_->getDepartamento($_GET["id"]);
@@ -112,7 +98,7 @@ if (isset($_POST)) {
 if (isset($_POST)) {
     if (isset($_POST["EDI"])) {
         //print_r($_POST);
-        $objD_->setEditP($data);
+        $objD_->setEditD($data);
     }
 }
 
@@ -123,7 +109,6 @@ $pages = new Paginator();
 $pages->items_total = $num_rows;
 $pages->paginate();
 $datosD = $objD_->getDB($data, $pages->limit);
-
 require_once 'menu.php';
 ?>
 <!doctype html>
@@ -145,7 +130,7 @@ require_once 'menu.php';
             <div class="row">
                 <div class="col-xs-12">
                     
-                    <div class="alert alert-success paleta" role="alert"><h3>Periodo de carga horaria:</h3>
+                    <div class="alert alert-success paleta" role="alert"><h3>Departamento:</h3>
                 </div>
                     <?php require './respuesta.php'; ?>
                     <ul class="nav nav-tabs">
@@ -181,12 +166,23 @@ require_once 'menu.php';
                                                     <?php
                                                     $fac = $objD_->getStatic_facultad();
 
+                                                    $doc = $objD_->getStatic_facultadUSER($_SESSION["user"]);
                                                     for ($i = 0; $i < count($fac); $i++) {
-                                                        
+                                                        if($doc[0]["idfacultad"] == $fac[$i]["idfacultad"])
+                                                        {
                                                             ?>
+                                                        
+                                                    <option selected value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
+                                                        <?php }
+                                                        else
+                                                        {
+                                                            ?>
+                                                    
                                                             <option value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
                                                             <?php
                                                     }
+                                                    
+                                                        }
                                                     ?>
                                                 </select>
                                             </div>
@@ -241,7 +237,7 @@ require_once 'menu.php';
                                                     <a class="close" href="dc.php?cfacultad=<?php echo $data['facultad']; ?>">&times;</a>                        
                                                     <?php
                                                     echo "Facultad: ";
-                                                    echo $data['facultad'];
+                                                     echo departamento::getStatic_facultadETIQUETA($data["facultad"])[0]["facultad"];
                                                     $BAND_COOKIE = true;
                                                     ?>
 
@@ -256,7 +252,8 @@ require_once 'menu.php';
                                                     <a class="close" href="dc.php?cfacultad=<?php echo $_COOKIE['facultad']; ?>">&times;</a>                        
                                                     <?php
                                                     echo "Facultad: ";
-                                                    echo $_COOKIE["facultad"];
+                                                    echo departamento::getStatic_facultadETIQUETA($_COOKIE["facultad"])[0]["facultad"];
+                                                    
                                                     $BAND_COOKIE = true;
                                                     ?>
 
@@ -349,7 +346,7 @@ require_once 'menu.php';
                                                 }
 ?>" class="form-control" />
                                                 
-                                                <input type="hidden" required name="iddepartamento" value="<?php
+                                                <input type="hidden" required name="id" value="<?php
                                                 if($BANDM)
                                                 {
                                                     echo $result[0]["id"];
@@ -362,7 +359,7 @@ require_once 'menu.php';
                                         <div class="form-group">
                                             <label for="facultad" class="control-label col-xs-5">Facultad</label>
                                             <div class="col-xs-7">
-                                                <select name="facultad" class="form-control" id="facultad">
+                                                <select name="facultad" class="form-control" id="facultad" required>
                                                     <option class="priElement" value="">Seleccione una opci&oacute;n</option>
 
                                                     <?php

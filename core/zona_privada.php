@@ -4,8 +4,8 @@ require_once('DBConnector.php');
 require_once('mStatic.php');
 /* Inicia nueva sesion */ 
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 
 if($_SESSION["user"]==""){ 
    

@@ -277,7 +277,6 @@ class p {
     
     public function delete($id)
     {
-        echo $cedula;
         $sql = "DELETE FROM `periodo` WHERE `id` = ?";
         $data = array("i", "{$id}");
         $result1 = DBConnector::ejecutar($sql, $data);

@@ -22,8 +22,8 @@ class departamento {
             {
                     $sql.="WHERE departamento like ? ";
                     $cadena .= "s";
-                    $departamento = '%'.strtoupper(str_replace(' ', '', $departamento)).'%';
-                    $data_llenado[] = strtoupper(str_replace(' ', '', $departamento));
+                    $departamento = '%'.strtoupper($departamento).'%';
+                    $data_llenado[] = $departamento;
                     $var = true;
             }
         }
@@ -62,7 +62,7 @@ class departamento {
         }
 
         $sql.=" Order by departamento $limit";
-//echo $sql;
+
         $fields = array("id" => "", "departamento" => "", "facultad"=>"");
         DBConnector::ejecutar($sql, $data, $fields);
 
@@ -91,8 +91,8 @@ class departamento {
             {
                     $sql.="WHERE departamento like ? ";
                     $cadena .= "s";
-                    $departamento = '%'.strtoupper(str_replace(' ', '', $departamento)).'%';
-                    $data_llenado[] = strtoupper(str_replace(' ', '', $departamento));
+                    $departamento = '%'.strtoupper($departamento).'%';
+                    $data_llenado[] = $departamento;
                     $var = true;
             }
         }
@@ -158,6 +158,15 @@ class departamento {
         return DBConnector::$results;
     }
     
+    public static function getStatic_facultadETIQUETA($id)
+    {
+        $sql = "SELECT facultad from facultad where idfacultad = ?";
+        $data = array("i", "{$id}");
+        $fields = array("facultad" => "");
+        DBConnector::ejecutar($sql, $data, $fields);
+        return DBConnector::$results;
+    }
+    
     public function setDepartamento($array = array())
     {
         foreach($array as $campo=>$valor)
@@ -165,16 +174,14 @@ class departamento {
             $$campo = $valor;
         }
         $sql = "INSERT INTO `departamento` (`departamento`, `_idfacultad`) VALUES (?, ?);";
-        //echo $sql;
-        //print_r($array);
         $data = array("si", "{$departamento}", "{$facultad}");
         $result1 = DBConnector::ejecutar($sql, $data);
         if ($result1)
         {
-            header("Location: dc.php?r=1");
+            echo '<script>window.location.href="dc.php?r=1";</script>';
         }else
         {
-            header("Location: dc.php?r=2");
+            echo '<script>window.location.href="dc.php?r=2";</script>';
         }
     }
     
@@ -188,33 +195,44 @@ class departamento {
         return DBConnector::$results;
     }
     
-    public function setEditP($array = array())
+    public function setEditD($array = array())
     {
-        //print_r($array);
-        //exit();
         foreach($array as $campo=>$valor)
         {
             $$campo = $valor;
         }
+
+        $sql = "UPDATE `departamento` SET `departamento` = ?, `_idfacultad` = ? WHERE `id` = ?;";
         
         
-        
-//Beneficiario
-        $sql = "UPDATE `periodo` SET `finicio` = ?, `ffin` = ?, `semestre_id` = ?, `estado` = ?, `descripcion` = ?, `anio_lectivo` = ? WHERE `id` = ?;";
-        
-        
-        $data = array("iiiisii", "{$finicio}", "{$ffin}", "{$semestre_id}", "{$estado}", "{$descripcion}", "{$anio_lectivo}", "{$id}");
+        $data = array("sii", "{$departamento}", "{$facultad}", "{$id}");
         $result = DBConnector::ejecutar($sql, $data);
         $result_c = DBConnector::$filaAfectada;
         
         if ($result or ($result_c > 0))
         {
+            echo '<script>window.location.href="dc.php?e=1";</script>';
             
-            header("Location: p.php?e=1");
         }else
         {
+            echo '<script>window.location.href="dc.php?e=2";</script>';
             
-            header("Location: p.php?e=2");
+        }
+    }
+    
+    public function delete($id)
+    {
+        $sql = "DELETE FROM `departamento` WHERE `id` = ?";
+        $data = array("i", "{$id}");
+        $result1 = DBConnector::ejecutar($sql, $data);
+        $result1_c = DBConnector::$filaAfectada;
+        
+        if ($result1 or ($result1_c > 0))
+        {
+           echo '<script>window.location.href="dc.php?d=1";</script>';
+        }else
+        {
+            echo '<script>window.location.href="dc.php?d=2";</script>';
         }
     }
 }
