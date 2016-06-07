@@ -351,7 +351,7 @@ class p {
         
 //Beneficiario
         $sql = "UPDATE `periodo` SET `finicio` = ?, `ffin` = ?, `semestre_id` = ?, `estado` = ?, `descripcion` = ?, `anio_lectivo` = ? WHERE `id` = ?;";
-        echo $sql;
+       
         
         $data = array("iiiisii", "{$finicio}", "{$ffin}", "{$semestre_id}", "{$estado}", "{$descripcion}", "{$anio_lectivo}", "{$id}");
         $result = DBConnector::ejecutar($sql, $data);
