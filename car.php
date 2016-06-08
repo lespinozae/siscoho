@@ -3,10 +3,10 @@
 ob_start();
 $data = data();
 require_once './core/zona_privada.php';
-require_once './core/depocoor.php';
+require_once './core/class.car.php';
 require_once './core/paginator.class.php';
 $accion = 0;
-$objD_ = new departamento();
+$objC_ = new carreras();
 
 function data() {
     $data = array();
@@ -14,52 +14,52 @@ function data() {
         $data["id"] = $_POST['id'];
     }
     
+    if (isset($_COOKIE['carreras'])) {
+        $data["carreras"] = $_COOKIE['carreras'];
+        if(strlen($_COOKIE['carreras']) > 0)
+            setcookie('carreras', $_COOKIE['carreras'], time() + 3600);
+    }else
+    if (array_key_exists('carreras', $_POST)) {
+        $data["carreras"] = $_POST['carreras'];
+        if(strlen($_POST['carreras']) > 0)
+            setcookie('carreras', $_POST['carreras'], time() + 3600);
+    } else
+    if (array_key_exists('carreras', $_GET)) {
+        $data["carreras"] = $_GET['carreras'];
+        if(strlen($_GET['carreras']) > 0)
+            setcookie('carreras', $_GET['carreras'], time() + 3600);
+    }
+    
     if (isset($_COOKIE['departamento'])) {
         $data["departamento"] = $_COOKIE['departamento'];
-        if(strlen($_COOKIE['departamento']) > 0)
+        if(strlen($_COOKIE['departamento']))
             setcookie('departamento', $_COOKIE['departamento'], time() + 3600);
     }else
     if (array_key_exists('departamento', $_POST)) {
         $data["departamento"] = $_POST['departamento'];
-        if(strlen($_POST['departamento']) > 0)
+        if(strlen($_POST['departamento']))
             setcookie('departamento', $_POST['departamento'], time() + 3600);
     } else
     if (array_key_exists('departamento', $_GET)) {
         $data["departamento"] = $_GET['departamento'];
-        if(strlen($_GET['departamento']) > 0)
+        if(strlen($_GET['departamento']))
             setcookie('departamento', $_GET['departamento'], time() + 3600);
-    }
-    
-    if (isset($_COOKIE['facultad'])) {
-        $data["facultad"] = $_COOKIE['facultad'];
-        if(strlen($_COOKIE['facultad']))
-            setcookie('facultad', $_COOKIE['facultad'], time() + 3600);
-    }else
-    if (array_key_exists('facultad', $_POST)) {
-        $data["facultad"] = $_POST['facultad'];
-        if(strlen($_POST['facultad']))
-            setcookie('facultad', $_POST['facultad'], time() + 3600);
-    } else
-    if (array_key_exists('facultad', $_GET)) {
-        $data["facultad"] = $_GET['facultad'];
-        if(strlen($_GET['facultad']))
-            setcookie('facultad', $_GET['facultad'], time() + 3600);
     }
     
     
     $BAND_DELETE_COOKIE = false;
-    if (array_key_exists('cdepartamento', $_GET)) {
-        setCookie('departamento', '', time() - 5000);
+    if (array_key_exists('ccarreras', $_GET)) {
+        setCookie('carreras', '', time() - 5000);
         $BAND_DELETE_COOKIE = true;
     }
-    if (array_key_exists('cfacultad', $_GET)) {
-        setCookie('facultad', '', time() - 5000);
+    if (array_key_exists('cdepartamento', $_GET)) {
+        setCookie('departamento', '', time() - 5000);
         $BAND_DELETE_COOKIE = true;
     }
     
     if($BAND_DELETE_COOKIE)
     {
-        header("Location: dc.php");
+        header("Location: car.php");
     }
     ob_end_flush(); 
     //print_r($_COOKIE);
@@ -72,14 +72,14 @@ $BANDM = false;
 if (isset($_GET)) {
     if (isset($_GET["id"]) and isset($_GET["d"])) {
 
-        $result = $objD_->delete($_GET["id"]);
+        $result = $objC_->delete($_GET["id"]);
     }
 }
 
 if (isset($_GET)) {
     if (isset($_GET["id"])) {
 
-        $result = $objD_->getDepartamento($_GET["id"]);
+        $result = $objC_->getCarrera($_GET["id"]);
 
         if (count($result) > 0) {
             $BANDM = true;
@@ -91,30 +91,32 @@ if (isset($_GET)) {
 if (isset($_POST)) {
     if (isset($_POST["SET"])) {
         //print_r($_POST);
-        $objD_->setDepartamento($data);
+        $objC_->setCarrera($data);
     }
 }
 
 if (isset($_POST)) {
     if (isset($_POST["EDI"])) {
         //print_r($_POST);
-        $objD_->setEditD($data);
+        $objC_->setEditC($data);
     }
 }
 
-$num_rows = count($objD_->getDC($data));
+$num_rows = count($objC_->getDC($data));
 
 
 $pages = new Paginator();
 $pages->items_total = $num_rows;
 $pages->paginate();
-$datosD = $objD_->getDB($data, $pages->limit);
+$datosD = $objC_->getDB($data, $pages->limit);
+
+
 require_once 'menu.php';
 ?>
 <!doctype html>
 <html lang="es">
     <head>
-        <title>Sistema de carga horaria docente</title>
+        <title>Sistema de carrerasga horaria docente</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -130,7 +132,7 @@ require_once 'menu.php';
             <div class="row">
                 <div class="col-xs-12">
                     
-                    <div class="alert alert-success paleta" role="alert"><h3>Departamento:</h3>
+                    <div class="alert alert-success paleta" role="alert"><h3>Carrera:</h3>
                 </div>
                     <?php require './respuesta.php'; ?>
                     <ul class="nav nav-tabs">
@@ -143,14 +145,14 @@ require_once 'menu.php';
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade in active">
                             <h3>Buscar Departamento</h3>
-                            <form name="form1" class="form-horizontal" style="text-align: left;" action="dc.php" method="POST">
+                            <form name="form1" class="form-horizontal" style="text-align: left;" action="car.php" method="POST">
                                 <div class="row">
                                     <div class="col-xs-4">
                                         
                                         <div class="form-group">
-                                            <label for="Departamento" class="control-label col-xs-5">Departamento</label>
+                                            <label for="carreras" class="control-label col-xs-5">Carrera</label>
                                             <div class="col-xs-7">
-                                                <input type="text" class="form-control" name="departamento" id="departamento" />
+                                                <input type="text" class="form-control" name="carreras" id="carreras" />
                                             </div>
                                         </div>
                                         
@@ -158,27 +160,27 @@ require_once 'menu.php';
                                         <div id="divmo" style="display:none;">
 
                                             <div class="form-group">
-                                            <label for="facultad" class="control-label col-xs-5">Facultad</label>
+                                            <label for="departamento" class="control-label col-xs-5">Departamento</label>
                                             <div class="col-xs-7">
-                                                <select name="facultad" class="form-control" id="semestre_id">
+                                                <select name="departamento" class="form-control" id="semestre_id">
                                                     <option class="priElement" value="">Seleccione una opci&oacute;n</option>
 
                                                     <?php
-                                                    $fac = $objD_->getStatic_facultad();
-
-                                                    $doc = $objD_->getStatic_facultadUSER($_SESSION["user"]);
+                                                    $fac = $objC_->getStatic_departamento();
+                                                    print_r($fac);
+                                                    $doc = $objC_->getStatic_departamentoUSER($_SESSION["user"]);
                                                     for ($i = 0; $i < count($fac); $i++) {
-                                                        if($doc[0]["idfacultad"] == $fac[$i]["idfacultad"])
+                                                        if($doc[0]["id"] == $fac[$i]["id"])
                                                         {
                                                             ?>
                                                         
-                                                    <option selected value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
+                                                    <option selected value="<?php echo $fac[$i]["id"]; ?>"><?php echo $fac[$i]["departamento"]; ?></option>
                                                         <?php }
                                                         else
                                                         {
                                                             ?>
                                                     
-                                                            <option value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
+                                                            <option value="<?php echo $fac[$i]["id"]; ?>"><?php echo $fac[$i]["departamento"]; ?></option>
                                                             <?php
                                                     }
                                                     
@@ -206,38 +208,38 @@ require_once 'menu.php';
                                         if (count($_COOKIE) > 0) {
                                             $BAND_COOKIE = false;
                                             //print_r($data);
-                                            if (isset($data['departamento']) and strlen($data['departamento']) > 0) {
+                                            if (isset($data['carreras']) and strlen($data['carreras']) > 0) {
                                                 ?>
                                                 <div class="alert alert-warning alert-dismissible espacio_cookie" role="alert">
-                                                    <a class="close" href="dc.php?cdepartamento=<?php  echo $data['departamento']; ?>">&times;</a>                        
+                                                    <a class="close" href="car.php?ccarreras=<?php  echo $data['carreras']; ?>">&times;</a>                        
                                                     <?php
-                                                    echo "Departamento: ";
-                                                    echo $data['departamento'];
+                                                    echo "Carrera: ";
+                                                    echo $data['carreras'];
                                                     $BAND_COOKIE = true;
                                                     ?>
                                                 </div>
                                                 <?php
-                                            } elseif (isset($_COOKIE["departamento"])) {
+                                            } elseif (isset($_COOKIE["carreras"])) {
                                                 ?>
 
                                                 <div class="alert alert-warning alert-dismissible espacio_cookie" role="alert">
-                                                    <a class="close" href="dc.php?cdepartamento=<?php  echo $_COOKIE['departamento']; ?>">&times;</a>                        
+                                                    <a class="close" href="car.php?ccarreras=<?php  echo $_COOKIE['carreras']; ?>">&times;</a>                        
                                                     <?php
-                                                    echo "Departamento: ";
-                                                    echo $_COOKIE["departamento"];
+                                                    echo "Carrera: ";
+                                                    echo $_COOKIE["carreras"];
                                                     $BAND_COOKIE = true;
                                                     ?>
 
                                                 </div>
                                                 <?php
                                             } 
-                                            if (isset($data['facultad']) and strlen($data['facultad']) > 0) {
+                                            if (isset($data['departamento']) and strlen($data['departamento']) > 0) {
                                                 ?>
                                                 <div class="alert alert-warning alert-dismissible espacio_cookie" role="alert">
-                                                    <a class="close" href="dc.php?cfacultad=<?php echo $data['facultad']; ?>">&times;</a>                        
+                                                    <a class="close" href="car.php?cdepartamento=<?php echo $data['departamento']; ?>">&times;</a>                        
                                                     <?php
-                                                    echo "Facultad: ";
-                                                     echo departamento::getStatic_facultadETIQUETA($data["facultad"])[0]["facultad"];
+                                                    echo "Departamento: ";
+                                                     echo carreras::getStatic_departamentoETIQUETA($data["departamento"])[0]["departamento"];
                                                     $BAND_COOKIE = true;
                                                     ?>
 
@@ -245,14 +247,14 @@ require_once 'menu.php';
 
 
                                                 <?php
-                                            } elseif (isset($_COOKIE["facultad"])) {
+                                            } elseif (isset($_COOKIE["departamento"])) {
                                                 ?>
 
                                                 <div class="alert alert-warning alert-dismissible espacio_cookie" role="alert">
-                                                    <a class="close" href="dc.php?cfacultad=<?php echo $_COOKIE['facultad']; ?>">&times;</a>                        
+                                                    <a class="close" href="car.php?cdepartamento=<?php echo $_COOKIE['departamento']; ?>">&times;</a>                        
                                                     <?php
-                                                    echo "Facultad: ";
-                                                    echo departamento::getStatic_facultadETIQUETA($_COOKIE["facultad"])[0]["facultad"];
+                                                    echo "Departamento: ";
+                                                    echo carreras::getStatic_departamentoETIQUETA($_COOKIE["departamento"])[0]["departamento"];
                                                     
                                                     $BAND_COOKIE = true;
                                                     ?>
@@ -266,7 +268,7 @@ require_once 'menu.php';
                                             {
                                                 ?>
                                         <div class="alert alert-warning alert-dismissible espacio_cookie" role="alert">
-                                            <a class="close" href="dc.php?<?php if (isset($data['departamento'])){ echo "cdepartamento=".$data['departamento']; } elseif (isset($_COOKIE['departamento'])) { echo "cdepartamento=".$_COOKIE['departamento']; } ?><?php if (isset($data['facultad'])){ echo "&cfacultad=".$data['facultad']; } elseif (isset($_COOKIE['facultad'])) { echo "&cfacultad=".$_COOKIE['facultad']; } ?>">&times;</a>                        
+                                            <a class="close" href="car.php?<?php if (isset($data['carreras'])){ echo "ccarreras=".$data['carreras']; } elseif (isset($_COOKIE['carreras'])) { echo "ccarreras=".$_COOKIE['carreras']; } ?><?php if (isset($data['departamento'])){ echo "&cdepartamento=".$data['departamento']; } elseif (isset($_COOKIE['departamento'])) { echo "&cdepartamento=".$_COOKIE['departamento']; } ?>">&times;</a>                        
                                                     <?php
                                                     echo "Eliminar todos los par&aacute;metros ";
                                                     ?>
@@ -279,8 +281,9 @@ require_once 'menu.php';
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th>Carrera</th>
                                                     <th>Departamento</th>
-                                                    <th>Faultad</th>
+                                                    
                                                     
                                                     <th></th>
                                                     <th></th>
@@ -295,15 +298,15 @@ require_once 'menu.php';
                                                     
                                                     ?>
                                                     <tr>
-                                                        <td><?php echo $datosD[$i]["departamento"]; ?></td>
+                                                        <td><?php echo $datosD[$i]["carreras"]; ?></td>
                                                         <td><?php 
-                                                        echo $datosD[$i]["facultad"];
+                                                        echo $datosD[$i]["departamento"];
                                                         
                                                         ?></td>
                                                         
-                                                        <td><a data-toggle="tooltip" title="Modificar" href="dc.php?id=<?php echo $datosD[$i]["id"]; ?>"><i class="fa fa-pencil-square-o fa-2x"></i>
+                                                        <td><a data-toggle="tooltip" title="Modificar" href="car.php?id=<?php echo $datosD[$i]["id"]; ?>"><i class="fa fa-pencil-square-o fa-2x"></i>
                                                             </a></td>
-                                                            <td><a id="eli" data-toggle="tooltip" title="Eliminar" onclick="alertDelete('dc.php?id=<?php echo $datosD[$i]["id"]; ?>&d=true')" href="#"><i class="fa fa-trash-o fa-2x"></i></a>
+                                                            <td><a id="eli" data-toggle="tooltip" title="Eliminar" onclick="alertDelete('car.php?id=<?php echo $datosD[$i]["id"]; ?>&d=true')" href="#"><i class="fa fa-trash-o fa-2x"></i></a>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -330,19 +333,19 @@ require_once 'menu.php';
                             </form>
                         </div>
                         <div id="menu1" class="tab-pane fade">
-                            <form name="form2" id="form2" class="form-horizontal" style="text-align: left;" action="dc.php" method="POST">
+                            <form name="form2" id="form2" class="form-horizontal" style="text-align: left;" action="car.php" method="POST">
 
                                 <div class="row">
-                                    <h4>Datos del Departamento</h4>
+                                    <h4>Datos de la Carrera</h4>
                                     <div class="control-label col-xs-6">
                                         
                                         <div class="form-group">
-                                            <label for="departamento" class="control-label col-xs-5">Departamento</label>
+                                            <label for="carreras" class="control-label col-xs-5">Carrera</label>
                                             <div class="col-xs-7">
-                                                <input type="text" required name="departamento" id="departamento" value="<?php
+                                                <input type="text" required name="carreras" id="carreras" value="<?php
                                                 if($BANDM)
                                                 {
-                                                    echo $result[0]["departamento"];
+                                                    echo $result[0]["carreras"];
                                                 }
 ?>" class="form-control" />
                                                 
@@ -357,27 +360,27 @@ require_once 'menu.php';
                                         </div>
                                         <div class="control-label col-xs-6">
                                         <div class="form-group">
-                                            <label for="facultad" class="control-label col-xs-5">Facultad</label>
+                                            <label for="departamento" class="control-label col-xs-5">Departamento</label>
                                             <div class="col-xs-7">
-                                                <select name="facultad" class="form-control" id="facultad" required>
+                                                <select name="departamento" class="form-control" id="departamento" required>
                                                     <option class="priElement" value="">Seleccione una opci&oacute;n</option>
 
                                                     <?php
-                                                    $fac = $objD_->getStatic_facultad();
+                                                    $fac = $objC_->getStatic_departamento();
                                                     if($BANDM)
                                                     {
                                                         for ($i = 0; $i < count($fac); $i++) {
-                                                        if($result[0]["_idfacultad"] == $fac[$i]["idfacultad"])
+                                                        if($result[0]["_id"] == $fac[$i]["id"])
                                                         {
                                                             ?>
                                                         
-                                                    <option selected value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
+                                                    <option selected value="<?php echo $fac[$i]["id"]; ?>"><?php echo $fac[$i]["departamento"]; ?></option>
                                                         <?php }
                                                         else
                                                         {
                                                             ?>
                                                     
-                                                            <option value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
+                                                            <option value="<?php echo $fac[$i]["id"]; ?>"><?php echo $fac[$i]["departamento"]; ?></option>
                                                             <?php
                                                     }
                                                     
@@ -385,19 +388,19 @@ require_once 'menu.php';
                                                     }  else {
                                                         
 
-                                                    $doc = $objD_->getStatic_facultadUSER($_SESSION["user"]);
+                                                    $doc = $objC_->getStatic_departamentoUSER($_SESSION["user"]);
                                                     for ($i = 0; $i < count($fac); $i++) {
-                                                        if($doc[0]["idfacultad"] == $fac[$i]["idfacultad"])
+                                                        if($doc[0]["id"] == $fac[$i]["id"])
                                                         {
                                                             ?>
                                                         
-                                                    <option selected value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
+                                                    <option selected value="<?php echo $fac[$i]["id"]; ?>"><?php echo $fac[$i]["departamento"]; ?></option>
                                                         <?php }
                                                         else
                                                         {
                                                             ?>
                                                     
-                                                            <option value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
+                                                            <option value="<?php echo $fac[$i]["id"]; ?>"><?php echo $fac[$i]["departamento"]; ?></option>
                                                             <?php
                                                     }
                                                     
@@ -419,7 +422,7 @@ require_once 'menu.php';
                                     }  else {
                                         ?>
                                         <input type="hidden" name="EDI" id="EDI" value="EDI" />
-                                        <button type="submit" name="enviar" id="enviar" class="btn btn-primary">Modificar Departamento</button> 
+                                        <button type="submit" name="enviar" id="enviar" class="btn btn-primary">Modificarreras Departamento</button> 
                                         <?php
                                     }
                                     ?>
