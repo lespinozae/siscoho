@@ -177,13 +177,27 @@ class carreras {
         $sql = "INSERT INTO `carreras` (`carreras`, `_id`) VALUES (?, ?);";
         $data = array("si", "{$carreras}", "{$departamento}");
         $result1 = DBConnector::ejecutar($sql, $data);
-        if ($result1)
+        $result_c = DBConnector::$filaAfectada;
+        
+        
+
+        if ($result1 or $result_c>0)
         {
-            echo '<script>window.location.href="car.php?r=1";</script>';
+            echo '<script>window.location.href="car.php?r=1&idC='.DBConnector::$id.'";</script>';
         }else
         {
             echo '<script>window.location.href="car.php?r=2";</script>';
         }
+    }
+    
+    public function setModalidad($id, $mod)
+    {
+
+        $sql = "INSERT INTO `turno` (`turno`, `carreras_id`) VALUES (?, ?);";
+        $data = array("si", "{$mod}", "{$id}");
+        $result1 = DBConnector::ejecutar($sql, $data);
+        $result_c = DBConnector::$filaAfectada;
+        return $result1;
     }
     
     public function getCarrera($id)
@@ -191,6 +205,16 @@ class carreras {
         $sql = "select id, carreras, _id from carreras where id = ?";  
         $data = array("i", "{$id}");
         $fields = array("id" => "", "carreras" => "", "_id"=>"");
+        DBConnector::ejecutar($sql, $data, $fields);
+
+        return DBConnector::$results;
+    }
+    
+    public function getModalidad($id)
+    {
+        $sql = "select idturno, turno from turno where carreras_id = ?";  
+        $data = array("i", "{$id}");
+        $fields = array("id" => "", "turno" => "");
         DBConnector::ejecutar($sql, $data, $fields);
 
         return DBConnector::$results;
@@ -234,6 +258,23 @@ class carreras {
         }else
         {
             echo '<script>window.location.href="car.php?d=2";</script>';
+        }
+    }
+    
+    
+    public function deleteMod($id, $idC)
+    {
+        $sql = "DELETE FROM `turno` WHERE `idturno` = ?";
+        $data = array("i", "{$id}");
+        $result1 = DBConnector::ejecutar($sql, $data);
+        $result1_c = DBConnector::$filaAfectada;
+        
+        if ($result1 or ($result1_c > 0))
+        {
+           echo '<script>window.location.href="mod.php?d=1&id='.$idC.'";</script>';
+        }else
+        {
+            echo '<script>window.location.href="mod.php?d=2";</script>';
         }
     }
 }

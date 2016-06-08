@@ -284,7 +284,7 @@ require_once 'menu.php';
                                                     <th>Carrera</th>
                                                     <th>Departamento</th>
                                                     
-                                                    
+                                                    <th></th>
                                                     <th></th>
                                                     <th></th>
                                                 </tr>
@@ -308,13 +308,34 @@ require_once 'menu.php';
                                                             </a></td>
                                                             <td><a id="eli" data-toggle="tooltip" title="Eliminar" onclick="alertDelete('car.php?id=<?php echo $datosD[$i]["id"]; ?>&d=true')" href="#"><i class="fa fa-trash-o fa-2x"></i></a>
                                                         </td>
+                                                        <td>
+                                                            <a data-toggle="tooltip" title="Modalidad" href="mod.php?id=<?php echo $datosD[$i]["id"]; ?>"><i class="fa fa-list-ul fa-2x" aria-hidden="true" ></i></a>
+                                                            
+                                                        </td>
                                                     </tr>
                                                     <?php
                                                 }
                                                 ?>
                                             </tbody>
                                         </table>
-
+                                                          
+  <!-- Modal -->
+  <div class="modal fade <?php if(isset($_GET["idC"])) { ?> in <?php }?>" <?php if(isset($_GET["idC"])) { ?> style="display: block; padding-left: 0px;" <?php }?> id="<?php if(isset($_GET["idC"])) { ?><?php echo $_GET["idC"]; ?><?php }?>myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Agregar Modalidad</h4>
+        </div>
+        <div class="modal-body">
+            <p><a href="mod.php?id=<?php if(isset($_GET["idC"])) { ?><?php echo $_GET["idC"]; ?><?php }?>" class="btn btn-primary">Continuar...</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
                                         <nav>
                                             <ul class="pagination">
                                                 <li>
@@ -477,5 +498,6 @@ include './inc/footer_common.php';
             }
         });
     </script>
+    <?php if(isset($_GET["idC"])) { ?><div class="modal-backdrop fade in"></div><?php } ?>
 </body>
 </html>
