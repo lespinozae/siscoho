@@ -1,13 +1,14 @@
 <?php
+
 require_once './core/zona_privada.php';
 require_once './core/class.car.php';
 require_once 'menu.php';
 
 
 if (isset($_GET)) {
-    if (isset($_GET["id"]) and isset($_GET["d"])) {
+    if (isset($_GET["id"]) and isset($_GET["d"]) and !isset($_GET["BAND"]) and $_GET["BAND"]!=md5(true)) {
         $obj = new carreras();
-        $result = $obj->deleteMod($_GET["id"]);
+        $result = $obj->deleteMod($_GET["id"], $_GET["idC"]);
     }
 }
 
@@ -111,7 +112,25 @@ else
                 </div>
                 <hr />
                 <div class="col-xs-6 col-xs-offset-3">
-                    <?php require './respuesta.php'; ?>
+                    <?php
+                    if (isset($_GET)) {
+                        if (isset($_GET["d"]) and $_GET["d"] == 1) {
+                            ?>
+                            <div class="alert alert-success alert-dismissible" role="alert" style="width: 60%; margin: 0 auto; text-align: center;">
+                                <button type="button" class="close" id="close_e" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Bien hecho!</strong> Tu registro se elimino correctamente.
+                            </div>
+                            <?php
+                        } elseif (isset($_GET["d"]) and $_GET["d"] == 2) {
+                            ?>
+                            <div class="alert alert-danger alert-dismissible" role="alert" style="width: 60%; margin: 0 auto; text-align: center;">
+                                <button type="button" class="close" id="close_e" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Error!</strong> Tu registro no se elimino. Contactese con su administrador si el error persiste
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
                     
                     <br />
                     <fieldset>
@@ -216,6 +235,8 @@ else
     </thead>
     <tbody>
         <?php
+        if(count($datosMO)>0)
+        {
         $car = $obj->getCarrera($_GET["id"]);
         foreach ($datosMO as $value) {
                 ?>
@@ -227,6 +248,7 @@ else
       </tr>
       <?php
        }
+        }
         ?>
     </tbody>
   </table>
@@ -259,6 +281,22 @@ else
                        return false;
                    }
                }
+               
+               $(document).on('ready', function ()
+    {
+       $('#close_e').on('click', function ()
+       {
+           var url = window.location.pathname;
+           var url2 = window.location.search;
+           var cadena = String(url2).split("?");
+           var cadena2 = String(cadena[1]).split("&");
+           //var arreglo = cadena.split('?');
+           
+           console.log(cadena2);
+           
+          window.location = url+"?"+cadena2[1]+"&"+cadena2[2];
+       });
+   });
         </script>
     </body>
 </html>

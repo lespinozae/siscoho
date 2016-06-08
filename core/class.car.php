@@ -271,7 +271,7 @@ class carreras {
         
         if ($result1 or ($result1_c > 0))
         {
-           echo '<script>window.location.href="mod.php?d=1&id='.$idC.'";</script>';
+           echo '<script>window.location.href="mod.php?d=1&id='.$idC.'&BAND='.md5(true).'";</script>';
         }else
         {
             echo '<script>window.location.href="mod.php?d=2";</script>';
