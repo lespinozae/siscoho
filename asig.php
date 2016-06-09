@@ -531,7 +531,7 @@ require_once 'menu.php';
                                                     <a class="close" href="asig.php?cturno_idturno=<?php echo $data['turno_idturno']; ?>">&times;</a>                        
                                                     <?php
                                                     echo "Modalidad: ";
-                                                   echo asignatura::getStatic_ModalidadETIQUETA($_COOKIE["turno_idturno"])[0]["turno"];
+                                                   echo asignatura::getStatic_ModalidadETIQUETA($data["turno_idturno"])[0]["turno"];
                                                     $BAND_COOKIE = true;
                                                     ?>
 
@@ -595,7 +595,7 @@ require_once 'menu.php';
                                                 <div class="alert alert-warning alert-dismissible espacio_cookie" role="alert">
                                                     <a class="close" href="asig.php?canio=<?php echo $data['anio']; ?>">&times;</a>                        
                                                     <?php
-                                                    echo "A&oatilde;o: ";
+                                                    echo "Año: ";
                                                      echo $data["anio"];
                                                     $BAND_COOKIE = true;
                                                     ?>
@@ -610,7 +610,7 @@ require_once 'menu.php';
                                                 <div class="alert alert-warning alert-dismissible espacio_cookie" role="alert">
                                                     <a class="close" href="asig.php?canio=<?php echo $_COOKIE['anio']; ?>">&times;</a>                        
                                                     <?php
-                                                    echo "A&oatilde;o: ";
+                                                    echo "Año: ";
                                                     echo $_COOKIE["anio"];
                                                     
                                                     $BAND_COOKIE = true;
@@ -707,7 +707,100 @@ require_once 'menu.php';
                         </div>
                         <div id="menu1" class="tab-pane fade">
                             <form name="form2" id="form2" class="form-horizontal" style="text-align: left;" action="asig.php" method="POST">
-                                <div class="row"><h1>CONSTRUCCI&Oacute;N</h1></div>
+                                <div class="row">
+                                    <h4>Datos del Departamento</h4>
+                                    <div class="control-label col-xs-6">
+                                        
+                                        <div class="form-group">
+                                            <label for="asignatura" class="control-label col-xs-5">Departamento</label>
+                                            <div class="col-xs-7">
+                                                <input type="text" required name="asignatura" id="asignatura" value="<?php
+                                                if($BANDM)
+                                                {
+                                                    echo $result[0]["asignatura"];
+                                                }
+?>" class="form-control" />
+                                                
+                                                <input type="hidden" required name="id" value="<?php
+                                                if($BANDM)
+                                                {
+                                                    echo $result[0]["id"];
+                                                }
+?>" class="form-control" />
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="control-label col-xs-6">
+                                        <div class="form-group">
+                                            <label for="turno_idturno" class="control-label col-xs-5">Facultad</label>
+                                            <div class="col-xs-7">
+                                                <select name="turno_idturno" class="form-control" id="turno_idturno" required>
+                                                    <option class="priElement" value="">Seleccione una opci&oacute;n</option>
+
+                                                    <?php
+//                                                    $fac = $objA_->getStatic_turno_idturno();
+//                                                    if($BANDM)
+//                                                    {
+//                                                        for ($i = 0; $i < count($fac); $i++) {
+//                                                        if($result[0]["_idturno_idturno"] == $fac[$i]["idturno_idturno"])
+//                                                        {
+//                                                            ?>
+                                                        
+                                                    <option selected value="//<?php //echo $fac[$i]["idturno_idturno"]; ?>"><?php //echo $fac[$i]["turno_idturno"]; ?></option>
+                                                        //<?php //}
+//                                                        else
+//                                                        {
+//                                                            ?>
+                                                    
+                                                            <option value="//<?php //echo $fac[$i]["idturno_idturno"]; ?>"><?php //echo $fac[$i]["turno_idturno"]; ?></option>
+                                                            //<?php
+//                                                    }
+//                                                    
+//                                                        }
+//                                                    }  else {
+//                                                        
+//
+//                                                    $doc = $objA_->getStatic_turno_idturnoUSER($_SESSION["user"]);
+//                                                    for ($i = 0; $i < count($fac); $i++) {
+//                                                        if($doc[0]["idturno_idturno"] == $fac[$i]["idturno_idturno"])
+//                                                        {
+//                                                            ?>
+                                                        
+                                                    <option selected value="//<?php //echo $fac[$i]["idturno_idturno"]; ?>"><?php //echo $fac[$i]["turno_idturno"]; ?></option>
+                                                        //<?php //}
+//                                                        else
+//                                                        {
+//                                                            ?>
+                                                    
+                                                            <option value="//<?php //echo $fac[$i]["idturno_idturno"]; ?>"><?php //echo $fac[$i]["turno_idturno"]; ?></option>
+                                                            //<?php
+//                                                    }
+//                                                    
+//                                                        }
+//                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                </div>
+                                <div class="form-actions">
+                                    <?php
+                                    if (!$BANDM) {
+                                    ?>
+                                    <input type="hidden" name="SET" id="SET" value="SET" />
+                                    <button type="submit" name="enviar" id="enviar" class="btn btn-primary" >Agregar Departamento</button> 
+                                    <?php
+                                    }  else {
+                                        ?>
+                                        <input type="hidden" name="EDI" id="EDI" value="EDI" />
+                                        <button type="submit" name="enviar" id="enviar" class="btn btn-primary">Modificar Departamento</button> 
+                                        <?php
+                                    }
+                                    ?>
+                                    <button class="btn cancel">Cancelar</button>
+                                </div> <!-- /form-actions -->
+                                </div>
                                 <!-- Aqui va lo que cortaste
                             </form>
                         </div>
@@ -724,6 +817,8 @@ require_once 'menu.php';
             </div>
 
         </div>
+        </div>
+            
         <input id="BAND" value="<?php echo $BANDM; ?>" type="hidden">
 <?php
 include './inc/footer.php';

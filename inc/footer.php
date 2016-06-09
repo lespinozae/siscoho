@@ -7,7 +7,7 @@
                 </p><p>2015 &COPY; Todos los derechos reservados </p>
             </div>
             <div class="col-xs-6 col-xs-offset-1">
-                <h3>Contatacto</h3>
+                <h3>Contacto</h3>
                 <p>Decano. Alejandro Genet</p>
                 <p>Correo. agenet&#64;unan.edu.ni</p>
             </div>

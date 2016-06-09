@@ -14,7 +14,7 @@ class asignatura {
         $data_llenado = array();
         
         $sql = "SELECT asignaturas.idasiganturas, asignaturas.asignaturas, asignaturas.anio, asignaturas.plan, asignaturas.thoras, asignaturas.turno_idturno from asignaturas INNER join turno INNER join carreras INNER JOIN departamento
-on asignaturas.turno_idturno = turno.idturno and turno.carreras_id = carreras.id and departamento.id = carreras.id ";
+on asignaturas.turno_idturno = turno.idturno and turno.carreras_id = carreras.id and departamento.id = carreras._id ";
         $var = false;
         
             //Construir parametros
@@ -161,7 +161,7 @@ on asignaturas.turno_idturno = turno.idturno and turno.carreras_id = carreras.id
         $data_llenado = array();
         
         $sql = "SELECT asignaturas.idasiganturas from asignaturas INNER join turno INNER join carreras INNER JOIN departamento
-on asignaturas.turno_idturno = turno.idturno and turno.carreras_id = carreras.id and departamento.id = carreras.id ";
+on asignaturas.turno_idturno = turno.idturno and turno.carreras_id = carreras.id and departamento.id = carreras._id ";
         $var = false;
         
             //Construir parametros
@@ -298,7 +298,7 @@ on asignaturas.turno_idturno = turno.idturno and turno.carreras_id = carreras.id
     
     public static function getStatic_Modalidad($idCar)
     {
-        $sql = "select idturno, turno from turno where carreras_id != ?";
+        $sql = "select idturno, turno from turno where carreras_id = ?";
         $data = array("i", "{$idCar}");
         $fields = array("idturno" => "", "turno"=>"");
         DBConnector::ejecutar($sql, $data, $fields);
