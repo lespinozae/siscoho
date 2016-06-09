@@ -8,6 +8,9 @@ if(count($d)>0)
 {
 ?>
     <?php
+    ?>
+    <option class="priElement" value="">Seleccione una opci&oacute;n</option>
+    <?php
     for ($i = 0; $i < count($d); $i++) {
         ?>
         <option value="<?php echo $d[$i]["id"]; ?>"><?php echo $d[$i]["departamento"]; ?></option>

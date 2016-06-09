@@ -152,7 +152,7 @@ class carreras {
     
     public static function getStatic_departamentoUSER($user)
     {
-        $sql = "SELECT departamento.id from departamento INNER join carreras INNER JOIN docentes ON departamento.id = carreras._id and departamento.id = docentes.departamento_id WHERE docentes.id = ?";
+        $sql = "SELECT departamento.id from departamento INNER join docentes ON departamento.id = docentes.departamento_id WHERE docentes.id = ?";
         $data = array("i", "{$user}");
         $fields = array("id" => "");
         DBConnector::ejecutar($sql, $data, $fields);

@@ -46,6 +46,23 @@ function data() {
             setcookie('departamento', $_GET['departamento'], time() + 3600);
     }
     
+    if (isset($_COOKIE['facultad'])) {
+        $data["facultad"] = $_COOKIE['facultad'];
+        if(strlen($_COOKIE['facultad']))
+            setcookie('facultad', $_COOKIE['facultad'], time() + 3600);
+    }else
+    if (array_key_exists('facultad', $_POST)) {
+        $data["facultad"] = $_POST['facultad'];
+        if(strlen($_POST['facultad']))
+            setcookie('facultad', $_POST['facultad'], time() + 3600);
+    } else
+    if (array_key_exists('facultad', $_GET)) {
+        $data["facultad"] = $_GET['facultad'];
+        if(strlen($_GET['facultad']))
+            setcookie('facultad', $_GET['facultad'], time() + 3600);
+    }
+    
+    
     
     $BAND_DELETE_COOKIE = false;
     if (array_key_exists('ccarreras', $_GET)) {
@@ -57,6 +74,14 @@ function data() {
         $BAND_DELETE_COOKIE = true;
     }
     
+    if (array_key_exists('cfacultad', $_GET)) {
+        setCookie('facultad', '', time() - 5000);
+        $BAND_DELETE_COOKIE = true;
+    }
+    if (array_key_exists('cfacultad', $_GET)) {
+        setCookie('facultad', '', time() - 5000);
+        $BAND_DELETE_COOKIE = true;
+    }
     if($BAND_DELETE_COOKIE)
     {
         header("Location: car.php");
@@ -167,7 +192,7 @@ require_once 'menu.php';
 
                                                     <?php
                                                     $fac = $objC_->getStatic_departamento();
-                                                    print_r($fac);
+                                                    //print_r($fac);
                                                     $doc = $objC_->getStatic_departamentoUSER($_SESSION["user"]);
                                                     for ($i = 0; $i < count($fac); $i++) {
                                                         if($doc[0]["id"] == $fac[$i]["id"])
@@ -255,6 +280,36 @@ require_once 'menu.php';
                                                     <?php
                                                     echo "Departamento: ";
                                                     echo carreras::getStatic_departamentoETIQUETA($_COOKIE["departamento"])[0]["departamento"];
+                                                    
+                                                    $BAND_COOKIE = true;
+                                                    ?>
+
+                                                </div>
+
+                                               <?php
+                                            } 
+                                            if (isset($data['facultad']) and strlen($data['facultad']) > 0) {
+                                                ?>
+                                                <div class="alert alert-warning alert-dismissible espacio_cookie" role="alert">
+                                                    <a class="close" href="dc.php?cfacultad=<?php echo $data['facultad']; ?>">&times;</a>                        
+                                                    <?php
+                                                    echo "Facultad: ";
+                                                     echo departamento::getStatic_facultadETIQUETA($data["facultad"])[0]["facultad"];
+                                                    $BAND_COOKIE = true;
+                                                    ?>
+
+                                                </div>
+
+
+                                                <?php
+                                            } elseif (isset($_COOKIE["facultad"])) {
+                                                ?>
+
+                                                <div class="alert alert-warning alert-dismissible espacio_cookie" role="alert">
+                                                    <a class="close" href="dc.php?cfacultad=<?php echo $_COOKIE['facultad']; ?>">&times;</a>                        
+                                                    <?php
+                                                    echo "Facultad: ";
+                                                    echo departamento::getStatic_facultadETIQUETA($_COOKIE["facultad"])[0]["facultad"];
                                                     
                                                     $BAND_COOKIE = true;
                                                     ?>

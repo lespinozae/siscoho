@@ -7,7 +7,7 @@ class menu {
         $menu = '';
         $sql = "select menu.id as id, menu.menu as menu, menu.archivo as archivo, id_padre from usuario inner join tusuario inner join tusuario_has_menu inner join menu
 on tusuario.id = usuario.tusuario_id and tusuario.id = tusuario_has_menu.tusuario_id and menu.id = tusuario_has_menu.menu_id
-where usuario.docentes_id = ? and menu.id_padre = ? and m =1";
+where usuario.docentes_id = ? and menu.id_padre = ? and m =1 order by menu.menu";
         //echo $sql;
         $user = $_SESSION["user"];
         $data = array("si", "{$user}","{$id_padre}");
