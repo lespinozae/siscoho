@@ -7,6 +7,7 @@
             <file>file:/Applications/MAMP/htdocs/siscoho/core/depocoor.php</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/core/class.car.php</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/cajax/modalidad.php</file>
+            <file>file:/Applications/MAMP/htdocs/siscoho/userc.php</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/core/class.asig.php</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/dc.php</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/car.php</file>
@@ -14,8 +15,10 @@
             <file>file:/Applications/MAMP/htdocs/siscoho/cajax/departamento.php</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/core/cargar_menu.php</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/inc/footer.php</file>
+            <file>file:/Applications/MAMP/htdocs/siscoho/d.php</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/inc/footer_common.php</file>
             <file>file:/Applications/MAMP/htdocs/siscoho/core/user.php</file>
+            <file>file:/Applications/MAMP/htdocs/siscoho/core/carga.php</file>
         </group>
     </open-files>
 </project-private>
