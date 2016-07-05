@@ -67,6 +67,24 @@ class carga {
         return DBConnector::$results;
     }
     
+    public static function getStatic_Facultad2()
+    {
+        $sql = "SELECT * FROM facultad where idfacultad != ?";
+        $data = array("i", "{-1}");
+        $fields = array("idfacultad" => "", "facultad"=>"");
+        DBConnector::ejecutar($sql, $data, $fields);
+        return DBConnector::$results;
+    }
+    
+    public static function getStatic_DepartamentoDocente($id)
+    {
+        $sql = "SELECT idfacultad as id FROM `facultad` INNER JOIN departamento INNER JOIN docentes on facultad.idfacultad = departamento._idfacultad and docentes.departamento_id = departamento.id where docentes.id = ?";
+        $data = array("i", "{$id}");
+        $fields = array("id" => "");
+        DBConnector::ejecutar($sql, $data, $fields);
+        return DBConnector::$results;
+    }
+    
     public static function getStatic_DepartamentoC($id)
     {
         $sql = "select id, `departamento` from `departamento` where _idfacultad = ?";

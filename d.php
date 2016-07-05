@@ -122,9 +122,35 @@ else
                         <legend><h3>Buscar asignatura</h3></legend>
                         <div class="mensaje" ></div>
  <form name="form2" id="form2" class="form-horizontal" style="text-align: left;">
-     <?php echo "<b>Facultad:</b> ". $dato_facutad[0]['facultad']; ?>
-     
      <br /><br/> 
+     <div class="form-group">
+         <label for="fac" class="control-label col-xs-4">Facultad:</label>
+                                            <div class="col-xs-8">
+                                                <?php $fac = carga::getStatic_Facultad2(); ?>
+                                                <select name="fac" class="form-control" id="fac" required onchange="from(this.value, 'dep', 'cajax/departamento.php')">
+                                                    <option class="priElement" value="">Seleccione una opci&oacute;n</option>
+                                                    <?php
+                                                    for ($i = 0; $i < count($fac); $i++) {
+                                                        
+                                                        if ($fac[$i]["idfacultad"] == $dato_facutad[0]['id'])
+                                                        {
+                                                            ?>
+                                                    
+                                                    <option selected value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
+                                                            <?php
+                                                        }
+ else {
+     ?>
+                                                    
+                                                            <option value="<?php echo $fac[$i]["idfacultad"]; ?>"><?php echo $fac[$i]["facultad"]; ?></option>
+                                                            <?php
+ }
+                                                        
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
          <label for="dep" class="control-label col-xs-4">Departamento: <br/>(Coordinaci&oacute;n)</label>
                                             <div class="col-xs-8">
