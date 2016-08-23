@@ -1,7 +1,7 @@
 <?php
 require_once './core/dompdf/autoload.inc.php';
 require_once './core/zona_privada.php';
-
+include './inc/head_common.php';
 require_once './core/carga.php';
 require_once './core/user.php';
 require_once './core/horario.php';
@@ -12,14 +12,13 @@ $id = $_GET["id"];
 $dato_periodo = carga::getStatic_activo();
 $horario = new horario();
 $carga_asignatura = $horario->get_existente_carga($id, $dato_periodo[0]['id']);
-    
-$codigo = "<table class='table table-hover editinplace_p' id='ad'>
+$codigo = "Carga: "; 
+if (count($carga_asignatura)>0) { $codigo .= 'Semestre: '. $dato_periodo[0]['nombre'] . ' - A&ntilde;o lectivo: '. $dato_periodo[0]['anio_lectivo']; }
+$codigo .= "<table class='table table-hover editinplace_p' id='ad'>
                                            <thead>
                                                 <tr>
                                                     <th>Asignatura</th>
                                                     <th>Horas</th>
-                                                    <th>Pago</th>
-                                                    <th>Total</th>
                                                     <th>Modalidad</th>
                                                     <th>Carrera</th>
                                                     <th>Departamento</th>
@@ -32,47 +31,34 @@ $codigo = "<table class='table table-hover editinplace_p' id='ad'>
                                                    
                                                     if(count($carga_asignatura)>0)
                                                     {
-                                                        $total_h = 0;
-                                                        $total_p = 0;
                                                     for($z = 0; $z<count($carga_asignatura); $z++)
                                                     {
                                                         $dato_horario = horario::get_horario($carga_asignatura[$z]["idcarga"]);
                                                         
-                                              
-                                        $codigo .= "<tr>
-                                            <td><input type='hidden' name='id' value=' ". $carga_asignatura[$z]["idcarga"]. "/>". $carga_asignatura[$z]["asignaturas"] . "</td>";
-                                        $codigo .= "<td>" . $carga_asignatura[$z]["thoras"]. "</td>";
-                                        $codigo .= "<td>C$ " .number_format($carga_asignatura[$z]["pagoxhora"], 2, ',', ' '). "</td>";
-                                        $codigo .= "<td>C$ " . number_format($carga_asignatura[$z]["pago"], 2, ',', ' ') . "</td>";
-                                        $codigo .="<td>".$carga_asignatura[$z]["turno"]. "</td>";
-                                        $codigo .="<td>". $carga_asignatura[$z]["carreras"] ."</td>";
-                                        $codigo .="<td>".$carga_asignatura[$z]["departamento"]."</td>";
-                                        
-                                       
-                                        $codigo .="<td>
-                                            <table>
-                                               
-                                                ";
-                                                    if(count($dato_horario)>0)
-                                                    {
-                                                    for($i = 0; $i<count($dato_horario); $i++)
-                                                    {
-                                                
-                                        $codigo .="<tr>
-                                            <td style='padding-right: 10px;'>". $dato_horario[$i]["dia"]."</td>";
-                                        $codigo .="<td style='padding-right: 10px;'>".date('h:i A', strtotime($dato_horario[$i]["inicio"]))."</td>";
-                                        $codigo .="<td style='padding-right: 10px;'>".date('h:i A', strtotime($dato_horario[$i]["fin"]))."</td>";
-                                        $codigo .="</tr>";
-                                                    }
-                                                    
-                                                    }
-                                                    
-                                                    
-                                        $codigo .="</table>";
+                                                        $codigo .= "<tr><td>". $carga_asignatura[$z]["asignaturas"]."</td>"."<td>".$carga_asignatura[$z]["thoras"]."</td>";
+                                                        $codigo .= "<td>".$carga_asignatura[$z]["turno"]. "</td>";
+                                                        $codigo .="<td>". $carga_asignatura[$z]["carreras"] ."</td>"."<td>".$carga_asignatura[$z]["departamento"]."</td>";
+
+                                                        $codigo .="<td>
+                                                                
+
+                                                                    ";
+                                                                        if(count($dato_horario)>0)
+                                                                        {
+                                                                            $codigo.="<table>";
+                                                                        for($i = 0; $i<count($dato_horario); $i++)
+                                                                        {
+
+                                                            $codigo .="<tr>
+                                                                <td style='padding-right: 10px;'>". $dato_horario[$i]["dia"]."</td>";
+                                                            $codigo .="<td style='padding-right: 10px;'>".date('h:i A', strtotime($dato_horario[$i]["inicio"]))."</td>";
+                                                            $codigo .="<td style='padding-right: 10px;'>".date('h:i A', strtotime($dato_horario[$i]["fin"]))."</td>";
+                                                            $codigo .="</tr>";
+                                                                        }
+$codigo .="</table>";
+                                                                        }
                                         $codigo .="</td>";
                                         
-                                        
-                                       
                                     $codigo .="</tr>";
                                     
                          } 

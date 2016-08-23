@@ -1,4 +1,3 @@
-
 <?php
 require_once('DBConnector.php');
 require_once('mStatic.php');
