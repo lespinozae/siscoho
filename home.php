@@ -213,7 +213,7 @@ if(isset($_GET) and isset($_GET["eli"]))
       
     </div>
   </div>
-  <button class="btn btn-primary" onclick="">Imprimir carga</button>
+  <button class="btn btn-primary" onclick="window.location='exportC.php?id=<?php echo $_SESSION["user"];?>'">Imprimir carga</button>
 </div>
 <!--                    <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#home">Datos personales</a></li>
